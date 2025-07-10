@@ -7,4 +7,20 @@
     <h1>bienvenue à notre site web pour le voyage d'etude à Florence</h1>
     <p>des info arriveront prochainement</p>
   </body>
+  <h1>Live USD/CHF Exchange Rate</h1>
+  <div id="usdchf">Loading USD/CHF rate...</div>
+  <script>
+    fetch('https://api.exchangerate.host/latest?base=USD&symbols=CHF') 
+      .then(response => response.json())
+      .then(data => {
+        const rate = data.rates.CHF;
+        document.getElementById('usdchf').innerText = `USD/CHF: ${rate}`;
+      })
+      .catch(() => {
+        document.getElementById('usdchf').innerText = 'Failed to load rate';
+      });
+  </script>
+</body>
 </html>
+
+
