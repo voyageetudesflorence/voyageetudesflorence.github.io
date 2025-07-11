@@ -10,6 +10,8 @@
   <div id="usdchf">Loading USD/CHF rate...</div>
   <h1>Live NVDA Share Price</h1>
  <div id="nvda">Loading NVDA price...</div>
+<h1>Live profit made with NVDA</h1>
+<div id="nvda">Loading profit...</div>
 <script>
   fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
     .then(res => res.json())
@@ -30,6 +32,7 @@
     console.error(err);
     document.getElementById('nvda').innerText = 'Failed to load NVDA price';
   });
+  NVDA*USD/CHF-6547.67
 </script>
 </body>
 </html>
