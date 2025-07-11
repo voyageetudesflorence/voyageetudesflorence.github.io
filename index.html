@@ -8,6 +8,8 @@
     <p>des info arriveront prochainement</p>
   <h1>Live USD/CHF Exchange Rate</h1>
   <div id="usdchf">Loading USD/CHF rate...</div>
+  <h1>Live NVDA Share Price</h1>
+ <div id="nvda">Loading NVDA price...</div>
 <script>
   fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
     .then(res => res.json())
@@ -19,6 +21,15 @@
       console.error('Error loading rate:', err);
       document.getElementById('usdchf').innerText = 'Failed to load rate';
     });
+  fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=demo')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('nvda').innerText = `NVDA: $${data.price}`;
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById('nvda').innerText = 'Failed to load NVDA price';
+  });
 </script>
 </body>
 </html>
