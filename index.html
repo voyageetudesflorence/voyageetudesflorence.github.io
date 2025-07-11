@@ -48,8 +48,9 @@
         
         if (usdchfRate === null || nvdaPrice === null) return;
 
-        const cost = 6547.67;
-        const ratePercentage = 40 / 100;
+        const shares = 70; 
+        const fullProfit = (nvdaPrice * usdchfRate * shares) - cost;
+        const tripShare = fullProfit * 0.4;
 
         const profitCHF = (nvdaPrice * usdchfRate) - (cost * ratePercentage);
         const profitText = profitCHF.toFixed(2);
