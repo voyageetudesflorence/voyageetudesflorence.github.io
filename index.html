@@ -6,35 +6,57 @@
   <body>
     <h1>bienvenue à notre site web pour le voyage d'etude à Florence</h1>
     <p>des info arriveront prochainement</p>
-  <h1>Live USD/CHF Exchange Rate</h1>
-  <div id="usdchf">Loading USD/CHF rate...</div>
-  <h1>Live NVDA Share Price</h1>
- <div id="nvda">Loading NVDA price...</div>
-<h1>Live profit made with NVDA</h1>
-<div id="nvda">Loading profit...</div>
-<script>
-  fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
-    .then(res => res.json())
-    .then(data => {
-      const rate = data.rates.CHF;
-      document.getElementById('usdchf').innerText = `USD/CHF: ${rate}`;
-    })
-    .catch(err => {
-      console.error('Error loading rate:', err);
-      document.getElementById('usdchf').innerText = 'Failed to load rate';
-    });
-  fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=c160194b8be34c119ae71cdc0f2fe326')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('nvda').innerText = `NVDA: $${data.price}`;
-  })
-  .catch(err => {
-    console.error(err);
-    document.getElementById('nvda').innerText = 'Failed to load NVDA price';
-  });
-  NVDA*USD/CHF-6547.67
-</script>
-</body>
-</html>
 
+    <h1>Live USD/CHF Exchange Rate</h1>
+    <div id="usdchf">Loading USD/CHF rate...</div>
+
+    <h1>Live NVDA Share Price</h1>
+    <div id="nvda">Loading NVDA price...</div>
+
+    <h1>Live profit made with NVDA</h1>
+    <div id="profit">Calculating profit...</div>
+
+    <script>
+      let usdchfRate = null;
+      let nvdaPrice = null;
+
+      fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
+        .then(res => res.json())
+        .then(data => {
+          usdchfRate = data.rates.CHF;
+          document.getElementById('usdchf').innerText = `USD/CHF: ${usdchfRate}`;
+          calculateProfit();
+        })
+        .catch(err => {
+          console.error('Error loading rate:', err);
+          document.getElementById('usdchf').innerText = 'Failed to load rate';
+        });
+
+      fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=c160194b8be34c119ae71cdc0f2fe326')
+        .then(res => res.json())
+        .then(data => {
+          nvdaPrice = parseFloat(data.price);
+          document.getElementById('nvda').innerText = `NVDA: $${nvdaPrice}`;
+          calculateProfit();
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('nvda').innerText = 'Failed to load NVDA price';
+        });
+
+      function calculateProfit() {
+        
+        if (usdchfRate === null || nvdaPrice === null) return;
+
+        const cost = 6547.67;
+        const ratePercentage = 40 / 100;
+
+        const profitCHF = (nvdaPrice * usdchfRate) - (cost * ratePercentage);
+        const profitText = profitCHF.toFixed(2);
+
+        document.getElementById('profit').innerText = `Profit in CHF: ${profitText}`;
+      }
+    </script>
+  </body>
+</html>
 
