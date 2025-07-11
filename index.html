@@ -8,15 +8,15 @@
     <p>des info arriveront prochainement</p>
   <h1>Live USD/CHF Exchange Rate</h1>
   <div id="usdchf">Loading USD/CHF rate...</div>
-  <script>
-  fetch('https://open.er-api.com/v6/latest/USD')
-    .then(response => response.json())
+<script>
+  fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
+    .then(res => res.json())
     .then(data => {
       const rate = data.rates.CHF;
       document.getElementById('usdchf').innerText = `USD/CHF: ${rate}`;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(err => {
+      console.error('Error loading rate:', err);
       document.getElementById('usdchf').innerText = 'Failed to load rate';
     });
 </script>
