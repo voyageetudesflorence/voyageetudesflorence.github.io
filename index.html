@@ -9,16 +9,17 @@
   <h1>Live USD/CHF Exchange Rate</h1>
   <div id="usdchf">Loading USD/CHF rate...</div>
   <script>
-    fetch('https://api.exchangerate.host/latest?base=USD&symbols=CHF') 
-      .then(response => response.json())
-      .then(data => {
-        const rate = data.rates.CHF;
-        document.getElementById('usdchf').innerText = `USD/CHF: ${rate}`;
-      })
-      .catch(() => {
-        document.getElementById('usdchf').innerText = 'Failed to load rate';
-      });
-  </script>
+  fetch('https://open.er-api.com/v6/latest/USD')
+    .then(response => response.json())
+    .then(data => {
+      const rate = data.rates.CHF;
+      document.getElementById('usdchf').innerText = `USD/CHF: ${rate}`;
+    })
+    .catch((error) => {
+      console.error(error);
+      document.getElementById('usdchf').innerText = 'Failed to load rate';
+    });
+</script>
 </body>
 </html>
 
