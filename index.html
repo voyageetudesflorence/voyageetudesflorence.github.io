@@ -21,7 +21,7 @@
       console.error('Error loading rate:', err);
       document.getElementById('usdchf').innerText = 'Failed to load rate';
     });
-  fetchfetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=c160194b8be34c119ae71cdc0f2fe326')
+  fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=c160194b8be34c119ae71cdc0f2fe326')
   .then(res => res.json())
   .then(data => {
     document.getElementById('nvda').innerText = `NVDA: $${data.price}`;
