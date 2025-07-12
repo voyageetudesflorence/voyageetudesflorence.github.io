@@ -32,7 +32,7 @@
           document.getElementById('usdchf').innerText = 'Failed to load rate';
         });
 
-      fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=c160194b8be34c119ae71cdc0f2fe326')
+      fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=--------------')
         .then(res => res.json())
         .then(data => {
           nvdaPrice = parseFloat(data.price);
