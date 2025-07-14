@@ -12,51 +12,52 @@
 
     <h1>Live NVDA Share Price</h1>
     <div id="nvda">Loading NVDA price...</div>
-
+    
     <h1>Live profit made with NVDA</h1>
     <div id="profit">Calculating profit...</div>
 
     <script>
-      let usdchfRate = null;
-      let nvdaPrice = null;
+  let usdchfRate = null;
+  let nvdaPrice = null;
 
-      fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
-        .then(res => res.json())
-        .then(data => {
-          usdchfRate = data.rates.CHF;
-          document.getElementById('usdchf').innerText = `USD/CHF: ${usdchfRate}`;
-          calculateProfit();
-        })
-        .catch(err => {
-          console.error('Error loading rate:', err);
-          document.getElementById('usdchf').innerText = 'Failed to load rate';
-        });
+  const cost = 106.17;
+  const ratePercentage = 0.4;
+  const shares = 70;
 
-      fetch('https://api.twelvedata.com/price?symbol=NVDA&apikey=--------------')
-        .then(res => res.json())
-        .then(data => {
-          nvdaPrice = parseFloat(data.price);
-          document.getElementById('nvda').innerText = `NVDA: $${nvdaPrice}`;
-          calculateProfit();
-        })
-        .catch(err => {
-          console.error(err);
-          document.getElementById('nvda').innerText = 'Failed to load NVDA price';
-        });
+  fetch('https://api.frankfurter.app/latest?from=USD&to=CHF')
+    .then(res => res.json())
+    .then(data => {
+      usdchfRate = data.rates.CHF;
+      document.getElementById('usdchf').innerText = `USD/CHF: ${usdchfRate}`;
+      calculateProfit();
+    })
+    .catch(err => {
+      console.error('Error loading rate:', err);
+      document.getElementById('usdchf').innerText = 'Failed to load rate';
+    });
 
-      function calculateProfit() {
-        
-        if (usdchfRate === null || nvdaPrice === null) return;
+  fetch('/.netlify/functions/getNvda')
+    .then(res => res.json())
+    .then(data => {
+      nvdaPrice = parseFloat(data.currentPrice);
+      document.getElementById('nvda').innerText = `NVDA: $${nvdaPrice}`;
+      calculateProfit();
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('nvda').innerText = 'Failed to load NVDA price';
+    });
 
-        const shares = 70; 
-        const fullProfit = (nvdaPrice * usdchfRate * shares) - cost;
-        const tripShare = fullProfit * 0.4;
+  function calculateProfit() {
+    if (usdchfRate === null || nvdaPrice === null) return;
 
-        const profitCHF = (nvdaPrice * usdchfRate) - (cost * ratePercentage);
-        const profitText = profitCHF.toFixed(2);
+    const profitPerShareUSD = nvdaPrice - cost;
+    const totalProfitUSD = profitPerShareUSD * shares;
+    const totalProfitCHF = totalProfitUSD * usdchfRate;
+    const tripProfitCHF = totalProfitCHF * ratePercentage;
 
-        document.getElementById('profit').innerText = `Profit in CHF: ${profitText}`;
-      }
+    document.getElementById('profit').innerText = `Profit in CHF: ${tripProfitCHF.toFixed(2)}`;
+  }
     </script>
   </body>
 </html>
