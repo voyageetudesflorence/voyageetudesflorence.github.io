@@ -4,16 +4,16 @@
     <title>Voyage à Florence</title>
   </head>
   <body>
-    <h1>bienvenue à notre site web pour le voyage d'etude à Florence</h1>
-    <p>des info arriveront prochainement</p>
+    <h1>Bienvenue à notre site web pour le voyage d'etude à Florence</h1>
+    <p>Ce site est destiné à tracer le profit creé pour notre voyage d'étude</p>
 
-    <h1>Live USD/CHF Exchange Rate</h1>
-    <div id="usdchf">Loading USD/CHF rate...</div>
+    <h1>Live prix échange USD/CHF</h1>
+    <div id="usdchf">chargement prix échange USD/CHF...</div>
 
-    <h1>Live NVDA Share Price</h1>
-    <div id="nvda">Loading NVDA price...</div>
+    <h1>Live prix action NVDA </h1>
+    <div id="nvda">chargement prix NVDA...</div>
     
-    <h1>Live profit made with NVDA</h1>
+    <h1>Live profit avec l'investisement NVDA</h1>
     <div id="profit">Calculating profit...</div>
 
 <script>
@@ -81,7 +81,7 @@
     console.log({ netProfitCHF });
     const tripProfitCHF = netProfitCHF * ratePercentage;
     document.getElementById('profit').innerText =
-      `Profit in CHF (40% to trip): ${tripProfitCHF.toFixed(2)}`;
+      `Profit en CHF: ${tripProfitCHF.toFixed(2)}`;
   }
 </script>
   </body>
