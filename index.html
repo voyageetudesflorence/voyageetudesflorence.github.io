@@ -16,7 +16,7 @@
     <h1>Live profit made with NVDA</h1>
     <div id="profit">Calculating profit...</div>
 
-    <script>
+<script>
   let usdchfRate = null;
   let nvdaPrice = null;
 
@@ -49,20 +49,20 @@
     });
 
   function calculateProfit() {
-  if (usdchfRate === null || nvdaPrice === null) return;
-  const buyPriceUSD = cost;
-  const numShares = shares;         
-  const buyCommissionCHF = 70;      
-  const sellCommissionCHF = 50;  
-  const currentValueUSD = nvdaPrice * numShares;
-  const currentValueCHF = currentValueUSD * usdchfRate;
-  const totalBuyCostUSD = buyPriceUSD * numShares;
-  const totalBuyCostCHF = totalBuyCostUSD * usdchfRate;
-  const netProfitCHF = currentValueCHF - totalBuyCostCHF - buyCommissionCHF - sellCommissionCHF;
-  const tripProfitCHF = netProfitCHF * ratePercentage
-  document.getElementById('profit').innerText = `Profit in CHF (40% to trip): ${tripProfitCHF.toFixed(2)}`;
- });
-    </script>
+    if (usdchfRate === null || nvdaPrice === null) return;
+    const buyPriceUSD = cost;
+    const numShares = shares;         
+    const buyCommissionCHF = 70;      
+    const sellCommissionCHF = 50;  
+    const currentValueUSD = nvdaPrice * numShares;
+    const currentValueCHF = currentValueUSD * usdchfRate;
+    const totalBuyCostUSD = buyPriceUSD * numShares;
+    const totalBuyCostCHF = totalBuyCostUSD * usdchfRate;
+    const netProfitCHF = currentValueCHF - totalBuyCostCHF - buyCommissionCHF - sellCommissionCHF;
+    const tripProfitCHF = netProfitCHF * ratePercentage;
+    document.getElementById('profit').innerText = `Profit in CHF (40% to trip): ${tripProfitCHF.toFixed(2)}`;
+  }
+</script>
   </body>
 </html>
 
