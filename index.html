@@ -49,15 +49,19 @@
     });
 
   function calculateProfit() {
-    if (usdchfRate === null || nvdaPrice === null) return;
-
-    const profitPerShareUSD = nvdaPrice - cost;
-    const totalProfitUSD = profitPerShareUSD * shares;
-    const totalProfitCHF = totalProfitUSD * usdchfRate;
-    const tripProfitCHF = totalProfitCHF * ratePercentage;
-
-    document.getElementById('profit').innerText = `Profit in CHF: ${tripProfitCHF.toFixed(2)}`;
-  }
+  if (usdchfRate === null || nvdaPrice === null) return;
+  const buyPriceUSD = cost;
+  const numShares = shares;         
+  const buyCommissionCHF = 70;      
+  const sellCommissionCHF = 50;  
+  const currentValueUSD = nvdaPrice * numShares;
+  const currentValueCHF = currentValueUSD * usdchfRate;
+  const totalBuyCostUSD = buyPriceUSD * numShares;
+  const totalBuyCostCHF = totalBuyCostUSD * usdchfRate;
+  const netProfitCHF = currentValueCHF - totalBuyCostCHF - buyCommissionCHF - sellCommissionCHF;
+  const tripProfitCHF = netProfitCHF * ratePercentage
+  document.getElementById('profit').innerText = `Profit in CHF (40% to trip): ${tripProfitCHF.toFixed(2)}`;
+ });
     </script>
   </body>
 </html>
