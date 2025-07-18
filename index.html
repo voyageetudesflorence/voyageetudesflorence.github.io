@@ -17,6 +17,20 @@
     <div id="profit">Calculating profit...</div>
 
 <script>
+  const sharesA       = 20;
+  const priceA_USD    = 124.60;
+  const rateA_CHF     = 0.9025;
+  const commissionA   = 30;
+
+  const sharesB       = 50;
+  const priceB_USD    = 98.80;
+  const rateB_CHF     = 0.8560;
+  const commissionB   = 40;
+
+  const buyCostCHF = 
+      (sharesA * priceA_USD * rateA_CHF) + commissionA
+    + (sharesB * priceB_USD * rateB_CHF) + commissionB;
+
   let usdchfRate = null;
   let nvdaPrice = null;
 
@@ -61,7 +75,7 @@
     });
 
     const currentValueCHF = nvdaPrice * shares * usdchfRate;
-    const totalBuyCHF   = cost * shares * usdchfRate;
+    const totalBuyCHF   = buyCostCHF;
     console.log({ currentValueCHF, totalBuyCHF });
     const netProfitCHF  = currentValueCHF - totalBuyCHF - 70 - 50;
     console.log({ netProfitCHF });
