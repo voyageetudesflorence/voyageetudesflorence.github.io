@@ -48,19 +48,26 @@
       document.getElementById('nvda').innerText = 'Failed to load NVDA price';
     });
 
-  function calculateProfit() {
+    function calculateProfit() {
     if (usdchfRate === null || nvdaPrice === null) return;
-    const buyPriceUSD = cost;
-    const numShares = shares;         
-    const buyCommissionCHF = 70;      
-    const sellCommissionCHF = 50;  
-    const currentValueUSD = nvdaPrice * numShares;
-    const currentValueCHF = currentValueUSD * usdchfRate;
-    const totalBuyCostUSD = buyPriceUSD * numShares;
-    const totalBuyCostCHF = totalBuyCostUSD * usdchfRate;
-    const netProfitCHF = currentValueCHF - totalBuyCostCHF - buyCommissionCHF - sellCommissionCHF;
+
+    console.log({
+      nvdaPrice,
+      usdchfRate,
+      cost,
+      shares,
+      buyCommission: 70,
+      sellCommission: 50
+    });
+
+    const currentValueCHF = nvdaPrice * shares * usdchfRate;
+    const totalBuyCHF   = cost * shares * usdchfRate;
+    console.log({ currentValueCHF, totalBuyCHF });
+    const netProfitCHF  = currentValueCHF - totalBuyCHF - 70 - 50;
+    console.log({ netProfitCHF });
     const tripProfitCHF = netProfitCHF * ratePercentage;
-    document.getElementById('profit').innerText = `Profit in CHF (40% to trip): ${tripProfitCHF.toFixed(2)}`;
+    document.getElementById('profit').innerText =
+      `Profit in CHF (40% to trip): ${tripProfitCHF.toFixed(2)}`;
   }
 </script>
   </body>
