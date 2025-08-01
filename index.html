@@ -103,7 +103,7 @@ p {
       let nvdaPrice = null;
       let googlPrice = null;
 
-      fetch('./.netlify/functions/getprices')
+      fetch('https://voyageetudeflorence.netlify.app/.netlify/functions/getprices')
         .then(res => res.json())
         .then(data => {
           console.log("Fetched data:", data); 
