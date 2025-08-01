@@ -1,16 +1,36 @@
 
-export async function handler(event, context) {
+
+exports.handler = async function () {
   const API_KEY = process.env.TWELVEDATA_API_KEY;
-  const url = `https://api.twelvedata.com/price?symbol=NVDA,USD/CHF&apikey=${API_KEY}`;
 
-  const response = await fetch(url);
-  const data = await response.json();
-
-  return {
-    statusCode: response.ok ? 200 : 500,
-    body: JSON.stringify({
-      nvda: parseFloat(data.NVDA.price),
-      usdchf: parseFloat(data["USD/CHF"].price)
-    })
+  const urls = {
+    nvda: `https://api.twelvedata.com/price?symbol=NVDA&apikey=${API_KEY}`,
+    googl: `https://api.twelvedata.com/price?symbol=GOOGL&apikey=${API_KEY}`,
+    usdchf: `https://api.twelvedata.com/price?symbol=USD/CHF&apikey=${API_KEY}`
   };
-}
+
+  try {
+    const [nvdaRes, googlRes, fxRes] = await Promise.all([
+      fetch(urls.nvda).then(r => r.json()),
+      fetch(urls.googl).then(r => r.json()),
+      fetch(urls.usdchf).then(r => r.json())
+    ]);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        currentPrice: nvdaRes.price,
+        googlPrice: googlRes.price,
+        usdchf: fxRes.price
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: 'Fetch failed',
+        details: err.message
+      })
+    };
+  }
+};
